@@ -10,8 +10,9 @@
 
   <modules>
     <module>util</module>
-    <module>examples</module>
     <module>kubernetes</module>
+    <module>client</module>
+    <module>examples</module>
   </modules>
 
   <prerequisites>
