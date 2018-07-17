@@ -1,0 +1,5 @@
+KUBERNETES_BRANCH=master
+CLIENT_VERSION=v1alpha2
+PACKAGE_NAME=org.kubeflow.client
+USERNAME=kubeflow-incubator
+REPOSITORY=tfjob-java-client
