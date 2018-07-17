@@ -1,39 +1,38 @@
 package org.kubeflow.client.examples;
 
-import io.kubernetes.client.models.*;
-import java.io.IOException;
-import java.util.*;
-import org.kubeflow.client.ApiClient;
-import org.kubeflow.client.ApiException;
-import org.kubeflow.client.Configuration;
-import org.kubeflow.client.apis.KubeflowOrgV1alpha2Api;
-import org.kubeflow.client.models.V1alpha2TFJob;
-import org.kubeflow.client.models.V1alpha2TFJobList;
-import org.kubeflow.client.models.V1alpha2TFJobSpec;
-import org.kubeflow.client.models.V1alpha2TFReplicaSpec;
-import org.kubeflow.client.util.Config;
+import java.util.List;
+import org.kubeflow.client.KubeflowClient;
+import org.kubeflow.client.KubeflowClientFactory;
+import org.kubeflow.client.model.Job;
+import org.kubeflow.client.model.TFReplica;
 
-/**
- * A simple example of how to use the Java API
- *
- * <p>
- *
- * <p>Easiest way to run this: mvn exec:java -Dexec.mainClass="org.kubeflow.client.examples.Example"
- *
- * <p>
- *
- * <p>From inside $REPO_DIR/examples
- */
 public class Example {
-  public static void main(String[] args) throws IOException, ApiException {
-    ApiClient client = Config.defaultClient();
-    Configuration.setDefaultApiClient(client);
+  public static void main(String[] args) {
+    try {
+      KubeflowClient client =
+          KubeflowClientFactory.newInstanceFromConfig("/home/mofeng.cj/kubeconfig");
 
-    KubeflowOrgV1alpha2Api api = new KubeflowOrgV1alpha2Api();
+      TFReplica ps =
+          new TFReplica()
+              .replicas(1)
+              .cpu(1.0)
+              .memory(1024.0)
+              .image("registry.cn-hangzhou.aliyuncs.com/jetmuffin/word2vec_kubeflow");
+      TFReplica worker =
+          new TFReplica()
+              .replicas(1)
+              .cpu(2.0)
+              .memory(2048.0)
+              .image("registry.cn-hangzhou.aliyuncs.com/jetmuffin/word2vec_kubeflow");
+      Job job = new Job().name("test").ps(ps).worker(worker).cleanupPolicy("running");
+      client.submitJob(job);
 
-    V1alpha2TFJobList list = api.listTFJobForAllNamespaces(null, null, null, null, null, null, null, null, null);
-    for (V1alpha2TFJob item : list.getItems()) {
-      System.out.println(item.getMetadata().getName());
+      List<Job> jobs = client.listJobs();
+      for (Job j : jobs) {
+        System.out.println(j);
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
     }
   }
 }

@@ -23,6 +23,7 @@ tmp/
 .project
 .classpath
 .loadpath
+.editorconfig
 
 ## External tool builders
 .externalToolBuilders/

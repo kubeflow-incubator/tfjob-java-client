@@ -4,7 +4,7 @@
     <artifactId>client-java-util</artifactId>
     <version>0.1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>client-java</name>
+    <name>client-java-util</name>
     <url>https://github.com/kubeflow/tfopreator</url>
     <parent>
         <groupId>org.kubeflow.client</groupId>
