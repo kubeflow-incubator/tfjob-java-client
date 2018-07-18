@@ -1,11 +1,8 @@
 package org.kubeflow.client.model;
 
 import io.kubernetes.client.custom.Quantity;
-import io.kubernetes.client.models.V1Container;
-import io.kubernetes.client.models.V1PodSpec;
-import io.kubernetes.client.models.V1PodTemplateSpec;
-import io.kubernetes.client.models.V1ResourceRequirements;
-import java.util.Arrays;
+import io.kubernetes.client.models.*;
+import java.util.*;
 import org.kubeflow.client.models.V1alpha2TFReplicaSpec;
 import org.kubeflow.client.util.JobUtil;
 
@@ -34,7 +31,12 @@ public class TFReplica {
   }
 
   public String getImage() {
-    return this.spec.getTemplate().getSpec().getContainers().get(0).getImage();
+    for (V1Container container : this.spec.getTemplate().getSpec().getContainers()) {
+      if (container.getName().equals(JobConstants.KUBEFLOW_CONTAINER_NAME)) {
+        return container.getImage();
+      }
+    }
+    return null;
   }
 
   public TFReplica replicas(int replica) {
@@ -49,64 +51,115 @@ public class TFReplica {
   public TFReplica command(String command) {
     if (command != null && command.length() > 0) {
       String[] commands = command.split("\\s+");
-      this.spec.getTemplate().getSpec().getContainers().get(0).setCommand(Arrays.asList(commands));
+      for (V1Container container : this.spec.getTemplate().getSpec().getContainers()) {
+        container.setCommand(Arrays.asList(commands));
+      }
     }
     return this;
   }
 
+  public TFReplica env(String name, String value) {
+    for (V1Container container : this.spec.getTemplate().getSpec().getContainers()) {
+      if (container.getName().equals(JobConstants.KUBEFLOW_CONTAINER_NAME)) {
+        container.addEnvItem(new V1EnvVar().name(name).value(value));
+      }
+    }
+    return this;
+  }
+
+  public Map<String, String> getEnvs() {
+    for (V1Container container : this.spec.getTemplate().getSpec().getContainers()) {
+      if (container.getName().equals(JobConstants.KUBEFLOW_CONTAINER_NAME)) {
+        Map<String, String> envs = new HashMap<>();
+        for (V1EnvVar item : container.getEnv()) {
+          envs.put(item.getName(), item.getValue());
+        }
+        return envs;
+      }
+    }
+    return null;
+  }
+
   public String getCommand() {
-    return JobUtil.joinCommands(
-        this.spec.getTemplate().getSpec().getContainers().get(0).getCommand());
+    for (V1Container container : this.spec.getTemplate().getSpec().getContainers()) {
+      if (container.getName().equals(JobConstants.KUBEFLOW_CONTAINER_NAME)) {
+        return JobUtil.joinStrings(container.getCommand());
+      }
+    }
+    return null;
   }
 
   public TFReplica cpu(Double cpu) {
-    this.spec
-        .getTemplate()
-        .getSpec()
-        .getContainers()
-        .get(0)
-        .getResources()
-        .putRequestsItem("cpu", new Quantity(Double.toString(cpu)));
+    for (V1Container container : this.spec.getTemplate().getSpec().getContainers()) {
+      if (container.getName().equals(JobConstants.KUBEFLOW_CONTAINER_NAME)) {
+        container
+            .getResources()
+            .putRequestsItem(
+                JobConstants.KUBEFLOW_RESOURCE_CPU, new Quantity(Double.toString(cpu)));
+      }
+    }
     return this;
   }
 
   public Double getCpu() {
-    return this.spec
-        .getTemplate()
-        .getSpec()
-        .getContainers()
-        .get(0)
-        .getResources()
-        .getRequests()
-        .get("cpu")
-        .getNumber()
-        .toBigInteger()
-        .doubleValue();
+    for (V1Container container : this.spec.getTemplate().getSpec().getContainers()) {
+      if (container.getName().equals(JobConstants.KUBEFLOW_CONTAINER_NAME)) {
+        return container
+            .getResources()
+            .getRequests()
+            .get(JobConstants.KUBEFLOW_RESOURCE_CPU)
+            .getNumber()
+            .toBigInteger()
+            .doubleValue();
+      }
+    }
+    return 0.0;
   }
 
   public TFReplica memory(Double memory) {
-    this.spec
-        .getTemplate()
-        .getSpec()
-        .getContainers()
-        .get(0)
-        .getResources()
-        .putRequestsItem("memory", new Quantity(Double.toString(memory)));
+    for (V1Container container : this.spec.getTemplate().getSpec().getContainers()) {
+      if (container.getName().equals(JobConstants.KUBEFLOW_CONTAINER_NAME)) {
+        container
+            .getResources()
+            .putRequestsItem(
+                JobConstants.KUBEFLOW_RESOURCE_MEMORY, new Quantity(Double.toString(memory)));
+      }
+    }
     return this;
   }
 
   public Double getMemory() {
-    return this.spec
-        .getTemplate()
-        .getSpec()
-        .getContainers()
-        .get(0)
-        .getResources()
-        .getRequests()
-        .get("memory")
-        .getNumber()
-        .toBigInteger()
-        .doubleValue();
+    for (V1Container container : this.spec.getTemplate().getSpec().getContainers()) {
+      if (container.getName().equals(JobConstants.KUBEFLOW_CONTAINER_NAME)) {
+        return container
+            .getResources()
+            .getRequests()
+            .get(JobConstants.KUBEFLOW_RESOURCE_MEMORY)
+            .getNumber()
+            .toBigInteger()
+            .doubleValue();
+      }
+    }
+    return 0.0;
+  }
+
+  public TFReplica args(String args) {
+    String[] argSplit = args.split("\\s+");
+    for (V1Container container : this.spec.getTemplate().getSpec().getContainers()) {
+      if (container.getName().equals(JobConstants.KUBEFLOW_CONTAINER_NAME)) {
+        container.setArgs(Arrays.asList(argSplit));
+      }
+    }
+    return this;
+  }
+
+  public String getArgs() {
+    for (V1Container container : this.spec.getTemplate().getSpec().getContainers()) {
+      if (container.getName().equals(JobConstants.KUBEFLOW_CONTAINER_NAME)) {
+        return JobUtil.joinStrings(container.getArgs());
+      }
+    }
+    return null;
   }
 
   public V1alpha2TFReplicaSpec getSpec() {
