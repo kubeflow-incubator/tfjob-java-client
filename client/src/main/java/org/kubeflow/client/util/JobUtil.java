@@ -11,7 +11,7 @@ public class JobUtil {
    * @param commands list of splitted command
    * @return a command joined by given list
    */
-  public static String joinCommands(List<String> commands) {
+  public static String joinStrings(List<String> commands) {
     if (commands == null) {
       return "";
     }
