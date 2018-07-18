@@ -33,8 +33,4 @@ public class JobUtil {
     String str = uuid.toString();
     return str.toLowerCase().replace("-", "_");
   }
-
-  public static String generateScriptPath(String namespace, String uuid) {
-    return "";
-  }
 }
