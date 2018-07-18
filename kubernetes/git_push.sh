@@ -8,12 +8,12 @@ git_repo_id=$2
 release_note=$3
 
 if [ "$git_user_id" = "" ]; then
-    git_user_id="kubernetes-client"
+    git_user_id="kubeflow-incubator"
     echo "[INFO] No command line input provided. Set \$git_user_id to $git_user_id"
 fi
 
 if [ "$git_repo_id" = "" ]; then
-    git_repo_id="client-java"
+    git_repo_id="tfjob-java-client"
     echo "[INFO] No command line input provided. Set \$git_repo_id to $git_repo_id"
 fi
 
