@@ -1,8 +1,8 @@
 lazy val root = (project in file(".")).
   settings(
-    organization := "io.kubernetes",
-    name := "client-java",
-    version := "1.0-SNAPSHOT",
+    organization := "org.kubeflow.client",
+    name := "client-java-api",
+    version := "0.1.0-SNAPSHOT",
     scalaVersion := "2.11.4",
     scalacOptions ++= Seq("-feature"),
     javacOptions in compile ++= Seq("-Xlint:deprecation"),

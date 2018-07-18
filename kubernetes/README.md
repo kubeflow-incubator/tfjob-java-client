@@ -1,4 +1,4 @@
-# client-java
+# client-java-api
 
 ## Requirements
 
@@ -26,9 +26,9 @@ Add this dependency to your project's POM:
 
 ```xml
 <dependency>
-    <groupId>io.kubernetes</groupId>
-    <artifactId>client-java</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <groupId>org.kubeflow.client</groupId>
+    <artifactId>client-java-api</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
     <scope>compile</scope>
 </dependency>
 ```
@@ -38,7 +38,7 @@ Add this dependency to your project's POM:
 Add this dependency to your project's build file:
 
 ```groovy
-compile "io.kubernetes:client-java:1.0-SNAPSHOT"
+compile "org.kubeflow.client:client-java-api:0.1.0-SNAPSHOT"
 ```
 
 ### Others
@@ -49,7 +49,7 @@ At first generate the JAR by executing:
 
 Then manually install the following JARs:
 
-* target/client-java-1.0-SNAPSHOT.jar
+* target/client-java-api-0.1.0-SNAPSHOT.jar
 * target/lib/*.jar
 
 ## Getting Started

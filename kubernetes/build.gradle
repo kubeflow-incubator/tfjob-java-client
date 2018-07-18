@@ -1,8 +1,8 @@
 apply plugin: 'idea'
 apply plugin: 'eclipse'
 
-group = 'io.kubernetes'
-version = '1.0-SNAPSHOT'
+group = 'org.kubeflow.client'
+version = '0.1.0-SNAPSHOT'
 
 buildscript {
     repositories {
@@ -83,7 +83,7 @@ if(hasProperty('target') && target == 'android') {
 
     install {
         repositories.mavenInstaller {
-            pom.artifactId = 'client-java'
+            pom.artifactId = 'client-java-api'
         }
     }
 
