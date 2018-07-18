@@ -10,13 +10,13 @@ public class JobUtilTest {
   public void testJoinCommands() {
     String[] commands = {"sh", "-c", "date"};
     String expected = "sh -c date";
-    assertEquals(JobUtil.joinCommands(Arrays.asList(commands)), expected);
+    assertEquals(JobUtil.joinStrings(Arrays.asList(commands)), expected);
 
-    assertEquals(JobUtil.joinCommands(null), "");
+    assertEquals(JobUtil.joinStrings(null), "");
 
     String[] singleCommands = {"date"};
     expected = "date";
-    assertEquals(JobUtil.joinCommands(Arrays.asList(singleCommands)), expected);
+    assertEquals(JobUtil.joinStrings(Arrays.asList(singleCommands)), expected);
   }
 
   @Test

@@ -11,7 +11,7 @@ public class JobUtil {
    * @param commands list of splitted command
    * @return a command joined by given list
    */
-  public static String joinCommands(List<String> commands) {
+  public static String joinStrings(List<String> commands) {
     if (commands == null) {
       return "";
     }
@@ -32,9 +32,5 @@ public class JobUtil {
     UUID uuid = UUID.randomUUID();
     String str = uuid.toString();
     return str.toLowerCase().replace("-", "_");
-  }
-
-  public static String generateScriptPath(String namespace, String uuid) {
-    return "";
   }
 }

@@ -6,6 +6,8 @@ public final class JobConstants {
   public static final String KUBEFLOW_CONTAINER_NAME = "tensorflow";
   public static final String KUBEFLOW_PS_REPLICA_NAME = "PS";
   public static final String KUBEFLOW_WORKER_REPLICA_NAME = "Worker";
+  public static final String KUBEFLOW_RESOURCE_CPU = "cpu";
+  public static final String KUBEFLOW_RESOURCE_MEMORY = "memory";
 
   public static final String DEFAULT_NAMESPACE = "default";
 }

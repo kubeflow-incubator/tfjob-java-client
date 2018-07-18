@@ -3,6 +3,10 @@ package org.kubeflow.client.model;
 import static org.junit.Assert.*;
 
 import io.kubernetes.client.models.V1Container;
+import io.kubernetes.client.models.V1EnvVar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.junit.Test;
 import org.kubeflow.client.models.V1alpha2TFJob;
 import org.kubeflow.client.models.V1alpha2TFReplicaSpec;
@@ -17,14 +21,18 @@ public class JobTest {
             .cpu(0.5)
             .memory(1024.0)
             .image("tensorflow:1.7.0")
-            .command("python test.py");
+            .command("python test.py")
+            .args("--train_tfrecords=train --test_tfrecords=test")
+            .env("RESOURCE_PATH", "file:///data");
     TFReplica worker =
         new TFReplica()
             .replicas(1)
             .cpu(0.5)
             .memory(1024.0)
             .image("tensorflow:1.7.0")
-            .command("python test.py");
+            .command("python test.py")
+            .args("--train_tfrecords=train --test_tfrecords=test")
+            .env("RESOURCE_PATH", "file:///data");
     Job job = new Job().name("test_job").ps(ps).worker(worker);
 
     V1alpha2TFJob tfjob = job.getTfjob();
@@ -53,5 +61,16 @@ public class JobTest {
     assertEquals(container.getCommand().size(), 2);
     assertEquals(container.getCommand().get(0), "python");
     assertEquals(container.getCommand().get(1), "test.py");
+
+    assertEquals(container.getArgs().size(), 2);
+    assertEquals(container.getArgs().get(0), "--train_tfrecords=train");
+
+    List<V1EnvVar> envVar = container.getEnv();
+    Map<String, String> envs = new HashMap<>();
+    for (V1EnvVar item : envVar) {
+      envs.put(item.getName(), item.getValue());
+    }
+    assert envs.containsKey("RESOURCE_PATH");
+    assertEquals(envs.get("RESOURCE_PATH"), "file:///data");
   }
 }
