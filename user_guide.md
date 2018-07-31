@@ -24,6 +24,7 @@ Clone the `gen` repo and `tfjob-java-client` repo from github:
 
 ```bash
 $ export ${CLIENT_GEN_ROOT}=kubeflow-client
+$ mkdir ${CLIENT_GEN_ROOT}
 $ cd ${CLIENT_GEN_ROOT}
 $ git clone https://github.com/kubeflow-incubator/gen.git
 $ git clone https://github.com/kubeflow-incubator/tfjob-java-client.git
