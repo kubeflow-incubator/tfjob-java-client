@@ -42,6 +42,15 @@ public class Job {
     return this.tfjob.getSpec().getCleanPodPolicy();
   }
 
+  public Job ttlSecondsAfterFinishing(int ttl) {
+      this.tfjob.getSpec().ttlSecondsAfterFinishing(ttl);
+      return this;
+  }
+
+  public int getTtlSecondsAfterFinishing() {
+      return this.tfjob.getSpec().getTtlSecondsAfterFinishing();
+  }
+
   public Job ps(TFReplica replica) {
     this.tfjob
         .getSpec()
