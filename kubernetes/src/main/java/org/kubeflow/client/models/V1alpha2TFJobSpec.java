@@ -39,6 +39,9 @@ public class V1alpha2TFJobSpec {
   @SerializedName("tfReplicaSpecs")
   private Map<String, V1alpha2TFReplicaSpec> tfReplicaSpecs = new HashMap<String, V1alpha2TFReplicaSpec>();
 
+  @SerializedName("ttlSecondsAfterFinishing")
+  private Integer ttlSecondsAfterFinishing = null;
+
   public V1alpha2TFJobSpec cleanPodPolicy(String cleanPodPolicy) {
     this.cleanPodPolicy = cleanPodPolicy;
     return this;
@@ -80,6 +83,24 @@ public class V1alpha2TFJobSpec {
     this.tfReplicaSpecs = tfReplicaSpecs;
   }
 
+  public V1alpha2TFJobSpec ttlSecondsAfterFinishing(Integer ttlSecondsAfterFinishing) {
+    this.ttlSecondsAfterFinishing = ttlSecondsAfterFinishing;
+    return this;
+  }
+
+   /**
+   * TTLSecondsAfterFinished is the TTL to clean up tf-jobs (temporary before kubernetes adds the cleanup controller). It may take extra ReconcilePeriod seconds for the cleanup, since reconcile gets called periodically. Default to infinite.
+   * @return ttlSecondsAfterFinishing
+  **/
+  @ApiModelProperty(value = "TTLSecondsAfterFinished is the TTL to clean up tf-jobs (temporary before kubernetes adds the cleanup controller). It may take extra ReconcilePeriod seconds for the cleanup, since reconcile gets called periodically. Default to infinite.")
+  public Integer getTtlSecondsAfterFinishing() {
+    return ttlSecondsAfterFinishing;
+  }
+
+  public void setTtlSecondsAfterFinishing(Integer ttlSecondsAfterFinishing) {
+    this.ttlSecondsAfterFinishing = ttlSecondsAfterFinishing;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -91,12 +112,13 @@ public class V1alpha2TFJobSpec {
     }
     V1alpha2TFJobSpec v1alpha2TFJobSpec = (V1alpha2TFJobSpec) o;
     return Objects.equals(this.cleanPodPolicy, v1alpha2TFJobSpec.cleanPodPolicy) &&
-        Objects.equals(this.tfReplicaSpecs, v1alpha2TFJobSpec.tfReplicaSpecs);
+        Objects.equals(this.tfReplicaSpecs, v1alpha2TFJobSpec.tfReplicaSpecs) &&
+        Objects.equals(this.ttlSecondsAfterFinishing, v1alpha2TFJobSpec.ttlSecondsAfterFinishing);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(cleanPodPolicy, tfReplicaSpecs);
+    return Objects.hash(cleanPodPolicy, tfReplicaSpecs, ttlSecondsAfterFinishing);
   }
 
 
@@ -107,6 +129,7 @@ public class V1alpha2TFJobSpec {
     
     sb.append("    cleanPodPolicy: ").append(toIndentedString(cleanPodPolicy)).append("\n");
     sb.append("    tfReplicaSpecs: ").append(toIndentedString(tfReplicaSpecs)).append("\n");
+    sb.append("    ttlSecondsAfterFinishing: ").append(toIndentedString(ttlSecondsAfterFinishing)).append("\n");
     sb.append("}");
     return sb.toString();
   }
