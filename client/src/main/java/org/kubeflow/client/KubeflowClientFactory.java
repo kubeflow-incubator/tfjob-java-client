@@ -80,6 +80,10 @@ public class KubeflowClientFactory {
    * @throws IOException
    */
   public static KubeflowClient newInstanceFromConfig(KubeConfig config) throws IOException {
-    return newInstance(Config.fromConfig(config), config.getNamespace());
+    String defaultNamespace = config.getNamespace();
+    if (defaultNamespace == null) {
+      defaultNamespace = JobConstants.DEFAULT_NAMESPACE;
+    }
+    return newInstance(Config.fromConfig(config), defaultNamespace);
   }
 }
