@@ -43,12 +43,12 @@ public class Job {
   }
 
   public Job ttlSecondsAfterFinishing(int ttl) {
-      this.tfjob.getSpec().ttlSecondsAfterFinishing(ttl);
-      return this;
+    this.tfjob.getSpec().ttlSecondsAfterFinishing(ttl);
+    return this;
   }
 
   public int getTtlSecondsAfterFinishing() {
-      return this.tfjob.getSpec().getTtlSecondsAfterFinishing();
+    return this.tfjob.getSpec().getTtlSecondsAfterFinishing();
   }
 
   public Job ps(TFReplica replica) {
