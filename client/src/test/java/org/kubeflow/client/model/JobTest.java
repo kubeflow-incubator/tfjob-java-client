@@ -37,7 +37,9 @@ public class JobTest {
 
     V1alpha2TFJob tfjob = job.getTfjob();
 
-    assertEquals(tfjob.getSpec().getTtlSecondsAfterFinishing().intValue(), job.getTtlSecondsAfterFinishing());
+    assertEquals(
+        tfjob.getSpec().getTtlSecondsAfterFinishing().intValue(),
+        job.getTtlSecondsAfterFinishing());
 
     assertEquals(tfjob.getMetadata().getName(), job.getName());
     assert tfjob.getSpec().getTfReplicaSpecs().containsKey("PS");
