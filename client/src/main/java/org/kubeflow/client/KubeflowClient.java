@@ -132,7 +132,7 @@ public class KubeflowClient {
     V1DeleteOptions options = new V1DeleteOptions();
     V1Status status =
         this.api.deleteNamespacedTFJob(name, namespace, options, null, null, null, null);
-    return status.getStatus().equals("success");
+    return status.getStatus().equals("Success");
   }
 
   /**
