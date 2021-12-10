@@ -39,7 +39,7 @@
         </dependency>
     </dependencies>
     <properties>
-        <junit-version>4.12</junit-version>
+        <junit-version>4.13.1</junit-version>
         <log4j-version>2.15.0</log4j-version>
     </properties>
 
